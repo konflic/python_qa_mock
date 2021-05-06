@@ -1,25 +1,29 @@
 import requests
 import json
 
+"""
+Актуальная команда для запуска:
+docker run -p 2525:2525 -p 8080:8080 -p 8081:8081 bbyars/mountebank start
+"""
+
 # точки с валидными координатами
 valid_points = {
-    "point_1": (55.999653, 37.206002),
-    "point_2": (55.996767, 37.184545),
-    "point_3": (55.984932, 37.208749),
+    "point_1": (55.99, 37.20),
+    "point_2": (55.99, 37.18),
+    "point_3": (55.98, 37.20),
 }
 
 # только третья точка имеет валидные координаты
 invalid_points = {
-    "point_1": (255.999653, 37.206002),
-    "point_2": (55.996767, 237.184545),
-    "point_3": (55.984932, 37.208749),
+    "point_1": (255.99, 37.20),
+    "point_2": (55.99, 237.18),
+    "point_3": (55.98, 37.20),
 }
 
 for points in [valid_points, invalid_points]:
-
     # формируем конфигурацию imposter'a
     imposter_cfg = {
-        "port": 8080,
+        "port": 8081,
         "protocol": "http",
         "stubs": [
             {
@@ -45,5 +49,11 @@ for points in [valid_points, invalid_points]:
     }
 
     # отправляем в mountebank запрос на создание imposter'a
-    r = requests.request('POST', 'http://localhost:2525/imposters', data=json.dumps(imposter_cfg), headers={"content-type": "application/json"})
-    print(r.text)
+    r = requests.request(
+        'POST',
+        'http://localhost:2525/imposters',
+        data=json.dumps(imposter_cfg),
+        headers={"content-type": "application/json"}
+    )
+
+    print("Mountebank response: ", r.text)

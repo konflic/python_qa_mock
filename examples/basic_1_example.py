@@ -17,12 +17,14 @@ print(json)
 print(json.dumps())
 print(json.dumps("hello"))
 print(json.dumps("hello", 1, 2, 3, 4, None))
+
 # 2. This method also returns Mock object
 json.dumps("hello").get("test").get(None)
 
 print("\n=== Mock example asserting mock calls ===")
 # 3. You can check how loads was called
 json.dumps.assert_called()
+
 # json.dumps.assert_called_once() - Only if method was called once
 json.dumps.assert_called_with('hello')
 json.loads("test_once")

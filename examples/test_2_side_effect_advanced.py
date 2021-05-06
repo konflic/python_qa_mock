@@ -24,6 +24,7 @@ def log_request(url):
         '12/25': 'Christmas',
         '12/31': 'New Year',
     }
+
     return response_mock
 
 

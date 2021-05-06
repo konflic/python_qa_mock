@@ -8,6 +8,7 @@ from unittest.mock import patch
 def test_get_holidays_timeout():
     with patch('patch_example.my_calendar.requests') as mock_requests:
         mock_requests.get.side_effect = Timeout
+
         with pytest.raises(Timeout):
             get_holidays()
 
