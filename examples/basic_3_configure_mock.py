@@ -21,5 +21,6 @@ response_mock = Mock()
 response_mock.json.return_value = {'12/25': 'Christmas', '7/4': 'Independence Day', }
 
 # New label
-holidays = {'12/25': 'Christmas', '7/4': 'Independence Day'}
-response_mock = Mock(**{'json.return_value': holidays})
+response = Mock(**{'json.return_value': {'12/25': 'Christmas', '7/4': 'Independence Day'}})
+
+print(response.json())

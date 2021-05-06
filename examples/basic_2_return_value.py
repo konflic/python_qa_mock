@@ -1,18 +1,18 @@
 from datetime import datetime
 
 
-def is_weekend():
-    """This works on weekday, but not on weekend"""
-    return (5 <= datetime.today().weekday() <= 6)
-
+# def is_weekend():
+#     """This works on weekday, but not on weekend"""
+#     return (5 <= datetime.today().weekday() <= 6)
 
 import datetime
+
 from unittest.mock import Mock
 
 # Save a couple of test days
 tuesday = datetime.datetime(year=2019, month=1, day=1)
 saturday = datetime.datetime(year=2019, month=1, day=5)
-sunday = datetime.datetime(year=2019, month=1, day=5)
+sunday = datetime.datetime(year=2019, month=1, day=6)
 
 
 def is_weekend():

@@ -13,47 +13,39 @@ valid_points = {
     "point_3": (55.98, 37.20),
 }
 
-# только третья точка имеет валидные координаты
-invalid_points = {
-    "point_1": (255.99, 37.20),
-    "point_2": (55.99, 237.18),
-    "point_3": (55.98, 37.20),
+# формируем конфигурацию imposter'a
+imposter_cfg = {
+    "port": 8080,
+    "protocol": "http",
+    "stubs": [
+        {
+            "predicates": [
+                {
+                    "equals": {
+                        "method": "GET",
+                        "path": "/api/points"
+                    }
+                }
+            ],
+            "responses": [
+                {
+                    "is": {
+                        "statusCode": 200,
+                        "headers": {"Content-Type": "application/json"},
+                        "body": valid_points
+                    }
+                }
+            ]
+        }
+    ]
 }
 
-for points in [valid_points, invalid_points]:
-    # формируем конфигурацию imposter'a
-    imposter_cfg = {
-        "port": 8081,
-        "protocol": "http",
-        "stubs": [
-            {
-                "predicates": [
-                    {
-                        "equals": {
-                            "method": "GET",
-                            "path": "/api/points"
-                        }
-                    }
-                ],
-                "responses": [
-                    {
-                        "is": {
-                            "statusCode": 200,
-                            "headers": {"Content-Type": "application/json"},
-                            "body": points
-                        }
-                    }
-                ]
-            }
-        ]
-    }
+# отправляем в mountebank запрос на создание imposter'a
+r = requests.request(
+    'POST',
+    'http://localhost:2525/imposters',
+    data=json.dumps(imposter_cfg),
+    headers={"content-type": "application/json"}
+)
 
-    # отправляем в mountebank запрос на создание imposter'a
-    r = requests.request(
-        'POST',
-        'http://localhost:2525/imposters',
-        data=json.dumps(imposter_cfg),
-        headers={"content-type": "application/json"}
-    )
-
-    print("Mountebank response: ", r.text)
+print("Mountebank response: ", r.text)

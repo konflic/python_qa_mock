@@ -5,4 +5,4 @@ calendar = Mock(spec=['is_weekday', 'get_holidays'])
 print(calendar.is_weekday())
 
 # Этот метод не в списке и потому не пропатчен
-calendar.create_event()
+print(calendar.get_holidays())

@@ -25,3 +25,7 @@ def set_mock(base_url):
             data=json.dumps(update_add_imposter),
             headers={"content-type": "application/json"}
         )
+
+        yield
+
+        requests.delete("http://localhost:2525/imposters/8080")
