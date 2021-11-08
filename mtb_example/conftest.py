@@ -15,17 +15,22 @@ def base_url(request):
 
 
 @pytest.fixture
-def set_mock(base_url):
+def set_mock(request, base_url):
+
     if "localhost" in base_url:
+        def wrapper(data_to_mock):
+            # run with --url http://localhost:8080
+            # We set imposter to mountebank
+            requests.request(
+                'POST',
+                'http://localhost:2525/imposters',
+                data=json.dumps(update_add_imposter(data_to_mock)),
+                headers={"content-type": "application/json"}
+            )
 
-        # We set imposter to mountebank
-        requests.request(
-            'POST',
-            'http://localhost:2525/imposters',
-            data=json.dumps(update_add_imposter),
-            headers={"content-type": "application/json"}
-        )
+            def fin():
+                requests.delete("http://localhost:2525/imposters/8080")
 
-        yield
+            request.addfinalizer(fin)
 
-        requests.delete("http://localhost:2525/imposters/8080")
+        return wrapper

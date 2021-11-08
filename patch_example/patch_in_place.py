@@ -5,3 +5,5 @@ print(is_weekday())
 
 with patch('__main__.is_weekday'):
     print(is_weekday())
+
+print(is_weekday())

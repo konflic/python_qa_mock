@@ -1,4 +1,4 @@
-update_add_imposter = {
+update_add_imposter = lambda data_to_mock: {
     "port": 8080,
     "protocol": "http",
     "stubs": [
@@ -18,12 +18,7 @@ update_add_imposter = {
                         "headers": {"Content-Type": "application/json"},
                         "body": {
                             "status": "ok",
-                            "data": {
-                                "name": "test",
-                                "surname": "test",
-                                "grade": 100,
-                                "sex": "test"
-                            }
+                            "data": data_to_mock
                         }
                     }
                 }

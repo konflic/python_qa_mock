@@ -3,7 +3,7 @@ import json
 
 """
 Актуальная команда для запуска:
-docker run -p 2525:2525 -p 8080:8080 -p 8081:8081 bbyars/mountebank start
+docker run --rm -p 2525:2525 -p 8080:8080 -p 8081:8081 bbyars/mountebank:2.5.0 mb start
 """
 
 # точки с валидными координатами
@@ -41,8 +41,7 @@ imposter_cfg = {
 }
 
 # отправляем в mountebank запрос на создание imposter'a
-r = requests.request(
-    'POST',
+r = requests.post(
     'http://localhost:2525/imposters',
     data=json.dumps(imposter_cfg),
     headers={"content-type": "application/json"}

@@ -19,9 +19,6 @@ def test_update_add_authorized_session(base_url, set_mock):
     # Create session
     session = requests.Session()
 
-    # Authorization
-    session.request("login", f"{base_url}/auth/login", json=AUTH_DATA)
-
     # Create user
     data_to_make = {
         "name": "Test" + str(random.randint(10, 1000)),
@@ -30,7 +27,12 @@ def test_update_add_authorized_session(base_url, set_mock):
         "sex": "male"
     }
 
+    if "localhost" in base_url:
+        set_mock(data_to_make)
     response = session.post(f"{base_url}/update/add", json=data_to_make)
+
+    # Authorization
+    session.request("login", f"{base_url}/auth/login", json=AUTH_DATA)
 
     # Verify addition and response
     try:
@@ -41,4 +43,5 @@ def test_update_add_authorized_session(base_url, set_mock):
     data = response.json().get("data")
     v = cerberus.Validator()
 
+    assert response.json()["data"]["name"] == data_to_make["name"]
     assert v.validate(data, schema)

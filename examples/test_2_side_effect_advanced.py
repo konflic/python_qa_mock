@@ -2,9 +2,8 @@ import requests
 
 from unittest.mock import Mock
 
-# Mock requests to control its behavior
-requests = Mock()
 
+# Mock requests to control its behavior
 
 def get_holidays():
     r = requests.get('http://localhost/api/holidays')
@@ -26,6 +25,9 @@ def log_request(url):
     }
 
     return response_mock
+
+
+requests = Mock()
 
 
 def test_get_holidays_logging():
