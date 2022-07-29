@@ -27,12 +27,13 @@ def test_update_add_authorized_session(base_url, set_mock):
         "sex": "male"
     }
 
-    if "localhost" in base_url:
-        set_mock(data_to_make)
+    set_mock(data_to_make)
+
     response = session.post(f"{base_url}/update/add", json=data_to_make)
 
     # Authorization
-    session.request("login", f"{base_url}/auth/login", json=AUTH_DATA)
+    login_response =session.request("login", f"{base_url}/auth/login", json=AUTH_DATA)
+    print(login_response)
 
     # Verify addition and response
     try:

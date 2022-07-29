@@ -5,8 +5,9 @@ import json
 from mtb_example.imposters import update_add_imposter
 
 
+# Change to http://localhost:8080
 def pytest_addoption(parser):
-    parser.addoption("--url", default="https://my-api-examaple.herokuapp.com/api", help="Url for test api location")
+    parser.addoption("--url", default="http://localhost:8080", help="Url for test api location")
 
 
 @pytest.fixture(scope="session")
@@ -18,6 +19,7 @@ def base_url(request):
 def set_mock(request, base_url):
 
     if "localhost" in base_url:
+
         def wrapper(data_to_mock):
             # run with --url http://localhost:8080
             # We set imposter to mountebank
@@ -34,3 +36,8 @@ def set_mock(request, base_url):
             request.addfinalizer(fin)
 
         return wrapper
+
+    def stub(arg):
+        pass
+
+    return stub

@@ -1,6 +1,6 @@
 import pytest
 
-from patch_example.my_calendar import get_holidays
+from patch_example.my_calendar import get_holidays, requests
 from requests.exceptions import Timeout
 from unittest.mock import patch
 
@@ -14,3 +14,6 @@ def test_get_holidays_timeout():
             get_holidays()
 
         mock_requests.get.assert_called_once()
+
+    r = requests.post("https://jsonplaceholder.typicode.com/posts")
+    print(r.json())

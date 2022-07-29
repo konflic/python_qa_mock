@@ -13,8 +13,6 @@ def test_get_holidays_timeout(mock_requests):
     with pytest.raises(Timeout):
         get_holidays()
 
-    mock_requests.get.assert_called_once()
-
     # Keep on working as expected
     r = requests.get("https://jsonplaceholder.typicode.com/posts")
     print(r.json())
